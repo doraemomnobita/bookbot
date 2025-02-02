@@ -1,65 +1,66 @@
-# def main():
-#     book_path = "books/frankenstein.txt"
-#     text = get_book_text(book_path)
-#     num_words = get_num_words(text)
-#     char_dict = get_num_chars(text)
-#     chars_sorted_list = convert_dict_to_list(char_dict)
-
-#     print(f"--- Begin report of {book_path} ---")
-#     print(f"{num_words} words found in the document")
-#     print()
-
-
-#     for item in chars_sorted_list:
-#         if not item['char'].isalpha():
-#             continue
-#         print(f"The {item['char']} character has {item['num']} times")
-
-#     print("----End report-----")
-
-# def get_book_text(path):
-#     with open(path) as f:
-#         return f.read()   
-         
-# def get_num_words(text):
-#     words = text.split()
-#     return len(words)
+def main():
+    book_path = "books/frankenstein.txt"
+    text = get_book_text(book_path)
+    num_words = get_num_words(text)
+    chars_dict = get_chars_dict(text)
+    chars_sorted_list = chars_dict_to_sorted_list(chars_dict)
+    print(f"---Begin report of {book_path}")
+    print(f"{num_words} words found in the book in {book_path}")
+    for item in chars_sorted_list:
+        if not item["char"].isalpha(): 
+            continue 
+        print(f"The '{item['char']}' character was found {item['num']} times")
+    print("--- End Report ---")
     
-  
-# def get_num_chars(words):
-#     dic = {}
-#     for word in words.lower():
-#         if word not in dic:
-#             dic[word] = 1
-#         else:
-#             dic[word] += 1
-#     return dic     
+   
 
 
-# def convert_dict_to_list(num_char_dict):
-#     sorted_list = []
-#     for ch in num_char_dict:
-#         sorted_list.append({'char':ch, 'num':num_char_dict[ch]})
-#     sorted_list.sort(reverse=True, key=sort_on)
-#     return sorted_list
+def get_num_words(text):
+    words = text.split()
+    return len(words)
 
 
-# def sort_on(dic):
-#     return dic["num"]
+def get_chars_dict(text):
+    chars = {}
+    for words in text:
+        for character in words:
+            lowered = character.lower()
+            if lowered in chars:
+                chars[lowered] += 1
+            else:
+                chars[lowered] = 1
+    return chars
+
+def sort_on(dic):
+    return dic["num"]
+
+def chars_dict_to_sorted_list(dic):
+    sorted_list = []
+    for ch in dic:
+        sorted_list.append({"char":ch, "num":dic[ch]})
+    sorted_list.sort(reverse=True, key=sort_on)
+    return sorted_list
+    
+ 
+
+
+def get_book_text(path):
+    with open(path) as f:
+        return f.read()
+
+
+main()
 
 
 
 
-# if __name__ =="__main__":
-#     main()
 
-
-dragons = [
-        ("Green Dragon", 0, 0, 1),
-        ("Red Dragon", 2, 2, 2),
-        ("Blue Dragon", 4, 3, 3),
-        ("Black Dragon", 5, -1, 4),
-    ]
+# dragons = [
+#         ("Green Dragon", 0, 0, 1),
+#         ("Red Dragon", 2, 2, 2),
+#         ("Blue Dragon", 4, 3, 3),
+#         ("Black Dragon", 5, -1, 4),
+#     ]
 
 # def describe(dragon):
 #     print(f"{dragon[0]} is at {dragon[1]}/{dragon[2]}")
